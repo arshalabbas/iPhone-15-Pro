@@ -18,13 +18,20 @@ const Hero = () => {
 
   useEffect(() => {
     window.addEventListener("resize", handleVideoSrcSet);
+    handleVideoSrcSet();
     return () => window.removeEventListener("resize", handleVideoSrcSet);
   }, []);
 
   useGSAP(() => {
     gsap.to("#hero", {
       opacity: 1,
-      delay: 1.5,
+      delay: 2,
+    });
+
+    gsap.to("#cta", {
+      opacity: 1,
+      y: -50,
+      delay: 2,
     });
   }, []);
   return (
@@ -52,7 +59,7 @@ const Hero = () => {
         <a href="#highlights" className="btn">
           Buy
         </a>
-        <p>From $199/month or $999</p>
+        <p className="font-normal text-xl">From $199/month or $999</p>
       </div>
     </section>
   );

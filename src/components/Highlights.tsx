@@ -1,5 +1,5 @@
 const Highlights = () => {
-  return <div>Highlights</div>;
+  return <section id="highlights" className="w-screen"></section>;
 };
 
 export default Highlights;
