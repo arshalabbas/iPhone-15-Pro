@@ -9,7 +9,7 @@ import * as THREE from "three";
 import { ModelType } from "../types";
 import { OrbitControls, PerspectiveCamera, View } from "@react-three/drei";
 import Lights from "./Lights";
-import IphoneModel from "./IPhoneModel";
+import IPhoneModel from "./IPhoneModel";
 import { OrbitControls as OrbitControlsImpl } from "three-stdlib";
 import Loader from "./Loader";
 
@@ -58,7 +58,7 @@ const ModelView = ({
 
       <group ref={groupRef} name={size} position={[0, 0, 0]}>
         <Suspense fallback={<Loader />}>
-          <IphoneModel
+          <IPhoneModel
             scale={index === 1 ? [15, 15, 15] : [17, 17, 17]}
             item={item}
           />

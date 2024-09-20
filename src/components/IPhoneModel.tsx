@@ -9,20 +9,63 @@ Title: Apple iPhone 15 Pro Max Black
 import { useEffect } from "react";
 import { useGLTF, useTexture } from "@react-three/drei";
 import { GroupProps } from "@react-three/fiber";
-import { ModelType } from "../types";
 import * as THREE from "three";
+import { ModelType } from "../types";
+import { GLTF } from "three-stdlib";
+
+// Extend the GLTF class to include our specific node types
+interface GLTFResult extends GLTF {
+  nodes: {
+    ttmRoLdJipiIOmf: THREE.Mesh;
+    DjsDkGiopeiEJZK: THREE.Mesh;
+    buRWvyqhBBgcJFo: THREE.Mesh;
+    MrMmlCAsAxJpYqQ_0: THREE.Mesh;
+    wqbHSzWaUxBCwxY_0: THREE.Mesh;
+    QvGDcbDApaGssma: THREE.Mesh;
+    vFwJFNASGvEHWhs: THREE.Mesh;
+    evAxFwhaQUwXuua: THREE.Mesh;
+    USxQiqZgxHbRvqB: THREE.Mesh;
+    TvgBVmqNmSrFVfW: THREE.Mesh;
+    GuYJryuYunhpphO: THREE.Mesh;
+    pvdHknDTGDzVpwc: THREE.Mesh;
+    CfghdUoyzvwzIum: THREE.Mesh;
+    DjdhycfQYjKMDyn: THREE.Mesh;
+    usFLmqcyrnltBUr: THREE.Mesh;
+    xXDHkMplTIDAXLN: THREE.Mesh;
+    vELORlCJixqPHsZ: THREE.Mesh;
+    EbQGKrWAqhBHiMv: THREE.Mesh;
+    EddVrWkqZTlvmci: THREE.Mesh;
+    KSWlaxBcnPDpFCs: THREE.Mesh;
+    TakBsdEjEytCAMK: THREE.Mesh;
+    IykfmVvLplTsTEW: THREE.Mesh;
+    wLfSXtbwRlBrwof: THREE.Mesh;
+    WJwwVjsahIXbJpU: THREE.Mesh;
+    YfrJNXgMvGOAfzz: THREE.Mesh;
+    DCLCbjzqejuvsqH: THREE.Mesh;
+    CdalkzDVnwgdEhS: THREE.Mesh;
+    NtjcIgolNGgYlCg: THREE.Mesh;
+    pXBNoLiaMwsDHRF: THREE.Mesh;
+    IkoiNqATMVoZFKD: THREE.Mesh;
+    rqgRAGHOwnuBypi: THREE.Mesh;
+  };
+  materials: {
+    [key: string]: THREE.Material;
+  };
+}
 
 interface Props extends GroupProps {
   item: ModelType;
 }
 
 const IphoneModel = (props: Props) => {
-  const { nodes, materials } = useGLTF("/models/scene.glb");
+  const { nodes, materials } = useGLTF("/models/scene.glb") as GLTFResult;
 
   const texture = useTexture(props.item.img);
 
   useEffect(() => {
-    Object.entries(materials).map((material) => {
+    Object.entries(materials).forEach((material) => {
+      const mat = material[1];
+
       // these are the material names that can't be changed color
       if (
         material[0] !== "zFdeDaGNRwzccye" &&
@@ -31,9 +74,15 @@ const IphoneModel = (props: Props) => {
         material[0] !== "jlzuBkUzuJqgiAK" &&
         material[0] !== "xNrofRCqOXXHVZt"
       ) {
-        material[1].color = new THREE.Color(props.item.color[0]);
+        // Check if the material is a type that has a color property (like MeshStandardMaterial)
+        if (
+          mat instanceof THREE.MeshStandardMaterial ||
+          mat instanceof THREE.MeshBasicMaterial
+        ) {
+          mat.color = new THREE.Color(props.item.color[0]); // Update the color
+        }
       }
-      material[1].needsUpdate = true;
+      mat.needsUpdate = true;
     });
   }, [materials, props.item]);
 
