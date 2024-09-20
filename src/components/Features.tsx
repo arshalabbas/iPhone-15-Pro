@@ -98,6 +98,7 @@ const Features = () => {
                     Mars.
                   </p>
                 </div>
+
                 <div className="flex-1 flex-center">
                   <p className="feature-text g_text">
                     Titanium has one of the best strength ratios to any metal,
