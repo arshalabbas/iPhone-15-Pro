@@ -1,4 +1,10 @@
-import { Dispatch, MutableRefObject, SetStateAction, Suspense } from "react";
+import {
+  Dispatch,
+  MutableRefObject,
+  RefObject,
+  SetStateAction,
+  Suspense,
+} from "react";
 import * as THREE from "three";
 import { ModelType } from "../types";
 import { OrbitControls, PerspectiveCamera, View } from "@react-three/drei";
@@ -11,7 +17,7 @@ interface Props {
   index: number;
   groupRef: MutableRefObject<THREE.Group<THREE.Object3DEventMap>>;
   gsapType: string;
-  controlRef: MutableRefObject<OrbitControlsImpl>;
+  controlRef: RefObject<OrbitControlsImpl>;
   setRotationState: Dispatch<SetStateAction<number>>;
   item: ModelType;
   size: "small" | "large";
@@ -45,7 +51,7 @@ const ModelView = ({
         rotateSpeed={0.4}
         target={new THREE.Vector3(0, 0, 0)}
         onEnd={() => {
-          if (controlRef)
+          if (controlRef && controlRef.current)
             setRotationState(controlRef.current.getAzimuthalAngle());
         }}
       />
